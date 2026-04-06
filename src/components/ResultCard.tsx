@@ -55,18 +55,21 @@ export default function ResultCard({ text, isRoasted, isExpanded = false }: Resu
     useEffect(() => {
       if (isExpanded) return; // No typewriter on already-expanded history
       let idx = 0;
+      let iv: ReturnType<typeof setInterval> | null = null;
       const t = setTimeout(() => {
-        const iv = setInterval(() => {
+        iv = setInterval(() => {
           if (idx < text.length) {
             idx++;
             setDisplay(text.slice(0, idx));
           } else {
-            clearInterval(iv);
+            if (iv) clearInterval(iv);
           }
         }, 10);
-        return () => clearInterval(iv);
       }, delay);
-      return () => clearTimeout(t);
+      return () => {
+        clearTimeout(t);
+        if (iv) clearInterval(iv);
+      };
     }, [text, delay]);
 
     return <p className={className}>{display}</p>;

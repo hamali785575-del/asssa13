@@ -6,6 +6,9 @@ import { useRouter } from 'next/navigation';
 import AuthModal from '@/components/AuthModal';
 import StickyAuthPrompt from '@/components/StickyAuthPrompt';
 import ResultCard from '@/components/ResultCard';
+import FAQSection from '@/components/FAQSection';
+import TestimonialSlider from '@/components/TestimonialSlider';
+import RecentVerdictsFeed from '@/components/RecentVerdictsFeed';
 
 export default function Home() {
   const [idea, setIdea] = useState('');
@@ -127,66 +130,86 @@ export default function Home() {
           No sugar-coating. Just data, wit, and a 100-word reality check.
         </p>
 
-        {/* The Main Tool */}
-        <div id="validator" className="max-w-3xl mx-auto mt-20 text-left animate-fade-up delay-200">
-          <div className="flex items-center gap-4 mb-4">
-            <h2 className="font-mono text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap">START YOUR ROAST</h2>
-            <div className="h-[2px] w-full bg-black"></div>
+        {/* The Main Tool Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-10 gap-12 items-start mt-20 max-w-6xl mx-auto">
+          {/* Left: Validator */}
+          <div id="validator" className="lg:col-span-6 text-left animate-fade-up delay-200">
+            <div className="flex items-center gap-4 mb-4">
+              <h2 className="font-mono text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap">START YOUR ROAST</h2>
+              <div className="h-[2px] w-full bg-black"></div>
+            </div>
+
+            <div className="bg-white border-3 border-black p-6 md:p-10 neo-brutal-card shadow-[8px_8px_0px_#000]">
+              <div className="flex justify-between items-center mb-4">
+                 <label className="font-mono text-[10px] font-black uppercase tracking-widest text-gray-400">Describe your concept:</label>
+                 <div className={`font-mono text-[10px] font-black px-2 py-0.5 border-2 border-black ${
+                   wordCount >= 100 ? 'bg-[#00C853]' : 
+                   wordCount >= 70 ? 'bg-[#FF8C00]' : 
+                   'bg-[#F5F500]'
+                 } shadow-[3px_3px_0px_#000]`}>
+                   {wordCount}/100 WORDS
+                 </div>
+              </div>
+
+              <textarea 
+                value={idea}
+                onChange={(e) => setIdea(e.target.value)}
+                placeholder="Enter your startup, content, or product idea here... Be detailed. The AI is hungry."
+                className="w-full h-48 md:h-64 bg-[#FFFFF0] border-3 border-black p-6 font-mono text-base focus:outline-none focus:border-[#FF3B3B] focus:shadow-[4px_4px_0px_#FF3B3B] transition-all resize-none"
+              />
+
+              {/* Neo-Brutalist Progress Bar */}
+              <div className="w-full h-6 border-3 border-black mt-6 relative overflow-hidden bg-white">
+                <div 
+                  className={`h-full transition-all duration-300 ${
+                    wordCount >= 100 ? 'bg-[#00C853]' : 
+                    wordCount >= 70 ? 'bg-[#FF8C00]' : 
+                    'bg-black'
+                  }`}
+                  style={{ width: `${Math.min((wordCount / 100) * 100, 100)}%` }}
+                ></div>
+              </div>
+
+              <button 
+                onClick={handleSubmit}
+                disabled={!isReady || loading}
+                className="w-full mt-10 bg-[#F5F500] border-3 border-black py-5 font-bebas text-4xl tracking-wide shadow-[6px_6px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[10px_10px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#000] disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed transition-all"
+              >
+                {loading ? 'ANALYZING...' : 'FORCE THE VERDICT'}
+              </button>
+
+              {error && (
+                <div className="mt-8 p-6 bg-[#FF3B3B] text-white border-3 border-black font-mono font-bold text-center animate-verdict-in">
+                  {error.toUpperCase()}
+                </div>
+              )}
+
+              <div ref={resultRef}>
+                {result && (
+                  <div className="mt-12">
+                    <div className="flex items-center gap-4 mb-4">
+                      <h2 className="font-mono text-xs font-black uppercase tracking-[0.2em] whitespace-nowrap">THE VERDICT</h2>
+                      <div className="h-[2px] w-full bg-[#FF3B3B]"></div>
+                    </div>
+                    <ResultCard text={result.text} isRoasted={result.isRoasted} />
+                  </div>
+                )}
+              </div>
+            </div>
           </div>
 
-          <div className="bg-white border-3 border-black p-6 md:p-10 neo-brutal-card shadow-[8px_8px_0px_#000]">
-            <div className="flex justify-between items-center mb-4">
-               <label className="font-mono text-[10px] font-black uppercase tracking-widest text-gray-400">Describe your concept:</label>
-               <div className={`font-mono text-[10px] font-black px-2 py-0.5 border-2 border-black ${
-                 wordCount >= 100 ? 'bg-[#00C853]' : 
-                 wordCount >= 70 ? 'bg-[#FF8C00]' : 
-                 'bg-[#F5F500]'
-               } shadow-[3px_3px_0px_#000]`}>
-                 {wordCount}/100 WORDS
-               </div>
-            </div>
-
-            <textarea 
-              value={idea}
-              onChange={(e) => setIdea(e.target.value)}
-              placeholder="Enter your startup, content, or product idea here... Be detailed. The AI is hungry."
-              className="w-full h-48 md:h-64 bg-[#FFFFF0] border-3 border-black p-6 font-mono text-base focus:outline-none focus:border-[#FF3B3B] focus:shadow-[4px_4px_0px_#FF3B3B] transition-all resize-none"
-            />
-
-            {/* Neo-Brutalist Progress Bar */}
-            <div className="w-full h-6 border-3 border-black mt-6 relative overflow-hidden bg-white">
-              <div 
-                className={`h-full transition-all duration-300 ${
-                  wordCount >= 100 ? 'bg-[#00C853]' : 
-                  wordCount >= 70 ? 'bg-[#FF8C00]' : 
-                  'bg-black'
-                }`}
-                style={{ width: `${Math.min((wordCount / 100) * 100, 100)}%` }}
-              ></div>
-            </div>
-
-            <button 
-              onClick={handleSubmit}
-              disabled={!isReady || loading}
-              className="w-full mt-10 bg-[#F5F500] border-3 border-black py-5 font-bebas text-4xl tracking-wide shadow-[6px_6px_0px_#000] hover:translate-x-[-2px] hover:translate-y-[-2px] hover:shadow-[10px_10px_0px_#000] active:translate-x-[2px] active:translate-y-[2px] active:shadow-[2px_2px_0px_#000] disabled:opacity-50 disabled:grayscale disabled:cursor-not-allowed transition-all"
-            >
-              {loading ? 'ANALYZING...' : 'FORCE THE VERDICT'}
-            </button>
-
-            {error && (
-              <div className="mt-8 p-6 bg-[#FF3B3B] text-white border-3 border-black font-mono font-bold text-center animate-verdict-in">
-                {error.toUpperCase()}
-              </div>
-            )}
-
-            <div ref={resultRef}>
-              {result && (
-                <ResultCard text={result.text} isRoasted={result.isRoasted} />
-              )}
-            </div>
+          {/* Right: Social Feed (Hidden on mobile) */}
+          <div className="lg:col-span-4 h-full hidden lg:block">
+            <RecentVerdictsFeed />
           </div>
         </div>
       </section>
+
+      {/* Testimonials */}
+      <TestimonialSlider />
+
+      {/* FAQ */}
+      <FAQSection />
 
       {/* Footer / Social */}
       <footer className="w-full border-t-3 border-black bg-black py-20 text-[#F5F500] px-6 text-center">
@@ -198,7 +221,7 @@ export default function Home() {
           Powered by brute force logic and elite-tier AI model llama-3.
         </p>
         <div className="font-mono text-[10px] font-black tracking-widest border-t border-white/20 pt-10">
-          DESIGNED FOR THOSE WHO ACT. © 2024 VIRAL?
+          DESIGNED FOR THOSE WHO ACT. © 2026 VIRAL?
         </div>
       </footer>
 
