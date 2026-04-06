@@ -12,6 +12,19 @@
   --font-bebas: var(--font-bebas);
   --font-space: var(--font-space);
   --font-mono: var(--font-mono);
+
+  --animate-verdict-in: verdict-in 0.3s ease forwards;
+  --animate-verdict-out: verdict-out 0.3s ease forwards;
+
+  @keyframes verdict-in {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes verdict-out {
+    from { opacity: 1; transform: translateY(0); }
+    to { opacity: 0; transform: translateY(-20px); }
+  }
 }
 
 :root {
@@ -26,7 +39,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Dot Grid Background */
+/* Full-page Dot Grid Background */
 body::before {
   content: "";
   position: fixed;
@@ -72,12 +85,7 @@ body::before {
   50% { opacity: 0; }
 }
 
-@keyframes slideInRight {
-  from { transform: translateX(100%); opacity: 0; }
-  to { transform: translateX(0); opacity: 1; }
-}
-
-/* Utility Animations */
+/* Animations */
 .animate-slide-down {
   animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
@@ -103,9 +111,42 @@ body::before {
   animation: blink 0.7s step-end infinite;
 }
 
-.animate-slide-in-right {
-  animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+/* Neo-Brutalist Utility Classes */
+.neo-brutal-card {
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  transition: all 0.15s ease;
 }
+
+.neo-brutal-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0px #000;
+}
+
+.neo-brutal-btn {
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.12s ease;
+}
+
+.neo-brutal-btn:hover:not(:disabled) {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px #000;
+  background-color: #FFE500;
+}
+
+.neo-brutal-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
+}
+
+.neo-brutal-btn:disabled {
+  background-color: #e0e0e0;
+  color: #888;
+  border-color: #888;
+  box-shadow: 0px 0px 0px #000;
+}
+
 /* Neo-Brutalist Scrollbar */
 ::-webkit-scrollbar {
   width: 16px;
@@ -132,48 +173,5 @@ body::before {
   scrollbar-width: auto;
   scrollbar-color: #F5F500 #FFFFFF;
 }
-@keyframes slide-in-bottom {
-  from { transform: translateY(20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
 
-@keyframes slide-out-top {
-  from { transform: translateY(0); opacity: 1; }
-  to { transform: translateY(-20px); opacity: 0; }
-}
 
-.animate-verdict-in {
-  animation: slide-in-bottom 0.3s ease forwards;
-}
-
-.animate-verdict-out {
-  animation: slide-out-top 0.3s ease forwards;
-}
-
-/* Neo-Brutalist Classes */
-.neo-brutal-card {
-  border: 3px solid #000;
-  box-shadow: 6px 6px 0px #000;
-  transition: all 0.15s ease;
-}
-
-.neo-brutal-card:hover {
-  transform: translate(-2px, -2px);
-  box-shadow: 10px 10px 0px #000;
-}
-
-.neo-brutal-btn {
-  border: 3px solid #000;
-  box-shadow: 5px 5px 0px #000;
-  transition: all 0.12s ease;
-}
-
-.neo-brutal-btn:hover:not(:disabled) {
-  transform: translate(-3px, -3px);
-  box-shadow: 8px 8px 0px #000;
-}
-
-.neo-brutal-btn:active:not(:disabled) {
-  transform: translate(2px, 2px);
-  box-shadow: 2px 2px 0px #000;
-}
