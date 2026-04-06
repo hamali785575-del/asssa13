@@ -1,26 +1,179 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
-
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --color-neo-bg: #FFFFFF;
+  --color-neo-fg: #000000;
+  --color-neo-yellow: #F5F500;
+  --color-neo-red: #FF3B3B;
+  --color-neo-green: #00C853;
+  --color-neo-orange: #FF8C00;
+  --color-neo-cream: #FFFFF0;
+  
+  --font-bebas: var(--font-bebas);
+  --font-space: var(--font-space);
+  --font-mono: var(--font-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+:root {
+  --background: #FFFFFF;
+  --foreground: #000000;
 }
 
 body {
-  background: var(--background);
+  background-color: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-space);
+  overflow-x: hidden;
+}
+
+/* Dot Grid Background */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-image: radial-gradient(circle, #000000 1px, transparent 1px);
+  background-size: 22px 22px;
+  opacity: 0.07;
+  z-index: -1;
+  pointer-events: none;
+}
+
+/* Global Keyframes */
+@keyframes slideDown {
+  from { transform: translateY(-100%); }
+  to { transform: translateY(0); }
+}
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes bounceY {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}
+
+@keyframes slideInRight {
+  from { transform: translateX(100%); opacity: 0; }
+  to { transform: translateX(0); opacity: 1; }
+}
+
+/* Utility Animations */
+.animate-slide-down {
+  animation: slideDown 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+.animate-fade-up {
+  opacity: 0;
+  animation: fadeUp 0.5s ease-out forwards;
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
+
+.animate-bounce-y {
+  animation: bounceY 1.2s ease-in-out infinite;
+}
+
+.animate-marquee {
+  animation: marquee 18s linear infinite;
+}
+
+.animate-blink {
+  animation: blink 0.7s step-end infinite;
+}
+
+.animate-slide-in-right {
+  animation: slideInRight 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+/* Neo-Brutalist Scrollbar */
+::-webkit-scrollbar {
+  width: 16px;
+}
+
+::-webkit-scrollbar-track {
+  background: #FFFFFF;
+  border-left: 3px solid #000000;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #F5F500;
+  border: 3px solid #000000;
+  border-left: none;
+  box-shadow: inset 2px 2px 0px rgba(255, 255, 255, 0.4);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #FFE500;
+}
+
+/* Firefox Support */
+* {
+  scrollbar-width: auto;
+  scrollbar-color: #F5F500 #FFFFFF;
+}
+@keyframes slide-in-bottom {
+  from { transform: translateY(20px); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+
+@keyframes slide-out-top {
+  from { transform: translateY(0); opacity: 1; }
+  to { transform: translateY(-20px); opacity: 0; }
+}
+
+.animate-verdict-in {
+  animation: slide-in-bottom 0.3s ease forwards;
+}
+
+.animate-verdict-out {
+  animation: slide-out-top 0.3s ease forwards;
+}
+
+/* Neo-Brutalist Classes */
+.neo-brutal-card {
+  border: 3px solid #000;
+  box-shadow: 6px 6px 0px #000;
+  transition: all 0.15s ease;
+}
+
+.neo-brutal-card:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 10px 10px 0px #000;
+}
+
+.neo-brutal-btn {
+  border: 3px solid #000;
+  box-shadow: 5px 5px 0px #000;
+  transition: all 0.12s ease;
+}
+
+.neo-brutal-btn:hover:not(:disabled) {
+  transform: translate(-3px, -3px);
+  box-shadow: 8px 8px 0px #000;
+}
+
+.neo-brutal-btn:active:not(:disabled) {
+  transform: translate(2px, 2px);
+  box-shadow: 2px 2px 0px #000;
 }
