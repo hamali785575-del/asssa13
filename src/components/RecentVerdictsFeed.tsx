@@ -37,7 +37,7 @@ const RecentVerdictsFeed: React.FC = () => {
     setPoolStartIndex(4);
     
     // Clear mounting state after all staggered initial animations finish
-    const timer = setTimeout(() => setIsMounting(false), 2000);
+    const timer = setTimeout(() => setIsMounting(false), 800);
     return () => clearTimeout(timer);
   }, []);
 
@@ -114,7 +114,7 @@ const RecentVerdictsFeed: React.FC = () => {
                 ${isMounting ? 'opacity-0 translate-y-4' : 'opacity-100 translate-y-0'}
               `}
               style={{
-                animationDelay: isMounting ? `${0.8 + idx * 0.15}s` : '0s',
+                animationDelay: isMounting ? `${0.2 + idx * 0.1}s` : '0s',
                 animationFillMode: 'forwards'
               }}
             >

@@ -57,7 +57,7 @@ export default function AuthModal({ message, onClose }: AuthModalProps) {
 
   return (
     <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/70 backdrop-blur-sm">
-      <div className="neo-brutal-card bg-white p-10 w-full max-w-md relative animate-fade-up">
+      <div className="neo-brutal-card bg-white p-8 w-full max-w-md relative animate-fade-up">
         <button 
           onClick={onClose}
           className="absolute top-4 right-4 bg-[#FF3B3B] text-white w-9 h-9 flex items-center justify-center font-black border-3 border-black neo-brutal-btn hover:-translate-y-1 transition-transform z-10"
@@ -65,17 +65,17 @@ export default function AuthModal({ message, onClose }: AuthModalProps) {
           X
         </button>
 
-        <h2 className="text-5xl font-bebas uppercase mb-4 leading-none tracking-tight">
+        <h2 className="text-4xl font-bebas uppercase mb-3 leading-none tracking-tight">
           {isLogin ? 'Welcome Back' : 'Get More Shots'}
         </h2>
         
         {message && (
-          <p className="bg-[#F5F500] p-3 border-2 border-black mb-8 font-mono font-bold text-[11px] uppercase tracking-wider">
+          <p className="bg-[#F5F500] p-3 border-2 border-black mb-6 font-mono font-bold text-[11px] uppercase tracking-wider">
             {message}
           </p>
         )}
 
-        <form onSubmit={handleSubmit} className="space-y-6">
+        <form onSubmit={handleSubmit} className="space-y-4">
           <div>
             <label className="block font-mono text-[11px] font-black uppercase mb-1.5 tracking-widest text-[#888]">Email Address</label>
             <input 
@@ -83,7 +83,7 @@ export default function AuthModal({ message, onClose }: AuthModalProps) {
               required
               value={email}
               onChange={e => setEmail(e.target.value)}
-              className="w-full border-3 border-black p-4 focus:outline-none focus:ring-4 focus:ring-[#F5F500] font-mono text-sm bg-[#FFFFF0] transition-shadow placeholder:opacity-30"
+              className="w-full border-3 border-black p-3 focus:outline-none focus:ring-4 focus:ring-[#F5F500] font-mono text-sm bg-[#FFFFF0] transition-shadow placeholder:opacity-30"
               placeholder="you@viral.com"
             />
           </div>
@@ -94,7 +94,7 @@ export default function AuthModal({ message, onClose }: AuthModalProps) {
               required
               value={password}
               onChange={e => setPassword(e.target.value)}
-              className="w-full border-3 border-black p-4 focus:outline-none focus:ring-4 focus:ring-[#F5F500] font-mono text-sm bg-[#FFFFF0] transition-shadow"
+              className="w-full border-3 border-black p-3 focus:outline-none focus:ring-4 focus:ring-[#F5F500] font-mono text-sm bg-[#FFFFF0] transition-shadow"
               placeholder="••••••••"
             />
           </div>
@@ -108,13 +108,13 @@ export default function AuthModal({ message, onClose }: AuthModalProps) {
           <button 
             type="submit"
             disabled={loading}
-            className="w-full bg-[#00C853] text-black font-bebas text-3xl uppercase py-4 neo-brutal-btn mt-4 disabled:bg-gray-300 disabled:shadow-[4px_4px_0px_#888]"
+            className="w-full bg-[#00C853] text-black font-bebas text-2xl uppercase py-3.5 neo-brutal-btn mt-2 disabled:bg-gray-300 disabled:shadow-[4px_4px_0px_#888]"
           >
             {loading ? 'Processing...' : (isLogin ? 'Log In' : 'Sign Up')}
           </button>
         </form>
 
-        <div className="relative my-8">
+        <div className="relative my-6">
           <div className="absolute inset-0 flex items-center">
             <div className="w-full border-t-2 border-black border-dashed"></div>
           </div>
@@ -149,7 +149,7 @@ export default function AuthModal({ message, onClose }: AuthModalProps) {
           Continue with Google
         </button>
 
-        <p className="mt-8 text-center font-mono font-bold text-[11px] uppercase tracking-wide text-gray-500">
+        <p className="mt-6 text-center font-mono font-bold text-[11px] uppercase tracking-wide text-gray-500">
           {isLogin ? "Don't have an account?" : "Already requested your roast?"}{' '}
           <button 
             onClick={() => setIsLogin(!isLogin)}
